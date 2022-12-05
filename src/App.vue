@@ -45,9 +45,6 @@ export default {
   html {
     font-size: 62.5%;
   }
-  section {
-    padding: 3rem 2rem;
-  }
   .hero {
     width: 100%;
     min-height: 100vh;

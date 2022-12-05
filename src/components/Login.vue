@@ -1,7 +1,7 @@
 <template>
         <div class="login" v-show="showLogin"> 
             <div class="login-left">
-                <div class="login-content">
+                <div class="login-left-content">
                     <div class="text">
                         <h1>歡迎回來!</h1>
                         <p>準備好與我們開始旅程嗎 ? 探索世界上好玩的事物及人群<br>馬上登入來分享您的趣事</p>
@@ -17,7 +17,7 @@
 
             </div>
             <div class="login-right">
-                <div class="login-content">
+                <div class="login-right-content">
                     <div class="photo">
                         <font-awesome-icon icon="fa-solid fa-user" class="icon" />
                     </div>
@@ -129,8 +129,8 @@
         position: absolute;
         top: 10%;
         bottom: 10%;
-        left: 20%;
-        right: 20%;
+        left: 10%;
+        right: 10%;
         background-color: #fff;
         display: flex;
         align-items: center;
@@ -171,10 +171,11 @@
             height: 100%;
             border-radius: 2rem;
             padding: 1.5rem;
-            .login-content {
+            .login-left-content {
                 @extend %login-content;
                 background-color: $mainColor;
                 border-radius: 2rem;
+                padding: 1.5rem;
                 .text {
                     text-align: center;
                     margin-top: 5rem;
@@ -190,8 +191,7 @@
                     }
                 }
                 .image {
-                    width: 50rem;
-                    padding: 1rem;
+                    padding: 0 5rem;
                     img {
                         width: 100%;
                     }
@@ -224,7 +224,7 @@
             background-color: #fff;
             padding: 1.5rem;
             border-radius: 2rem;
-            .login-content {
+            .login-right-content {
                 @extend %login-content;
                 .photo {
                     position: relative;
@@ -359,7 +359,84 @@
         padding: 10px;
         cursor: pointer;
     }
-    
-  
+
+    @media(max-width: 991px) {
+        .login {
+            .login-left {
+                .login-left-content {
+                    padding: 2rem;
+                    .text {
+                        p {
+                            font-size: 1.4rem;
+                        }
+                    }
+                    .image {
+                        padding: 0;
+                    }
+                    .btn {
+                        text-align: center;
+                        button {
+                            margin-top: 2rem;
+                        }
+                    }
+                }
+            }
+            .login-right {
+                .login-right-content {
+                    form {
+                        width: 100%;
+                    }
+                    .platform {
+                        p {
+                            span::before, span::after {
+                                width: 30%;
+                            }        
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media(max-width: 768px) {
+        .login {
+            flex-direction: column-reverse;
+            .login-left {
+                width: 100%;
+                padding: 0; 
+                .login-left-content { 
+                    padding: 0;
+                    border-radius: 0 0 2rem 2rem;
+                    .text {
+                        display: none;
+                    }
+                    .image {
+                        display: none;
+                    }
+                    .btn {
+                        bottom: 1rem;
+                        button {
+                            margin: 1rem 0;
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+            .login-right {
+                width: 100%;
+                .login-right-content {
+                    .platform {
+                        p {
+                            span::before, span::after {
+                                width: 30%;
+                            }        
+                        }
+                    }
+                }
+            }
+        }
+    }
+    @media(max-width: 450px) {
+        
+    }
 
 </style>
