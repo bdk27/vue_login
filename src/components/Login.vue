@@ -59,9 +59,18 @@
                 <h1>789</h1>
             </div>
             <div class="create-right">
-                <h1>987</h1>
-                <div class="btn">
-                    <button @click="isHidden">按我1</button>
+                <div class="create-right-content">
+                    <div class="text">
+                        <h1>馬上註冊!</h1>
+                        <p>別錯過精彩內容，只需註冊就能瀏覽世界趣事<br>馬上註冊來探索全新世界</p>
+                    </div>
+                    <div class="image">
+                        <img src="../assets/img/people-and-technology.png">
+                    </div>
+                    <div class="btn">
+                        <span>已經註冊帳戶了嗎? 點擊按鈕立即登入</span>
+                        <button @click="isHidden">前往登入</button>
+                    </div>
                 </div>
                 <div class="loose-leaf">
                     <div class="circle"></div>
@@ -129,8 +138,8 @@
         position: absolute;
         top: 10%;
         bottom: 10%;
-        left: 10%;
-        right: 10%;
+        left: 15%;
+        right: 15%;
         background-color: #fff;
         display: flex;
         align-items: center;
@@ -191,7 +200,7 @@
                     }
                 }
                 .image {
-                    padding: 0 5rem;
+                    margin: 0 2rem;
                     img {
                         width: 100%;
                     }
@@ -200,7 +209,7 @@
                     span {
                         font-size: 1.4rem;
                         color: $lightText;
-                        padding: 1.5rem;
+                        padding: 1rem;
                     }
                     button {
                         border: 1px solid $darkText;
@@ -341,12 +350,55 @@
             border-radius: 2rem;
         }
         .create-right {
-            position: relative;
             width: 50%;
             height: 100%;
-            background-color: $mainColor;
             border-radius: 2rem;
-            
+            padding: 1.5rem;
+            .create-right-content {
+                @extend %login-content;
+                background-color: $mainColor;
+                border-radius: 2rem;
+                padding: 1.5rem;
+                .text {
+                    text-align: center;
+                    margin-top: 5rem;
+                    h1 {
+                        font-size: 3rem;
+                        padding: 1rem;
+                        color: $darkText;
+                    }
+                    p {
+                        font-size: 1.6rem;
+                        color: $lightText;
+                        line-height: 1.6em;
+                    }
+                }
+                .image {
+                    margin: 0 2rem;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .btn {
+                    span {
+                        font-size: 1.4rem;
+                        color: $lightText;
+                        padding: 1rem;
+                    }
+                    button {
+                        border: 1px solid $darkText;
+                        border-radius: 1rem;
+                        background-color: transparent;
+                        color: $darkText;
+                        font-size: 1.6rem;
+                    }
+                    button:hover {
+                        background-color: $darkText;
+                        color: #fff;
+                        transition: .5s;
+                    }
+                }
+            }
         }
     }
 
@@ -371,7 +423,7 @@
                         }
                     }
                     .image {
-                        padding: 0;
+                        margin: 0;
                     }
                     .btn {
                         text-align: center;
