@@ -63,25 +63,26 @@
                     <form action="#">
                         <div class="user">
                             <label for="user">名稱 :</label>
-                            <input type="text" name="user" placeholder="請輸入名稱">
-                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="usShow"/>
+                            <input type="text" name="user" placeholder="請輸入名稱" v-model.trim="form.user">
+                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="form.usShow"/>
                         </div>
                         <div class="account">
                             <label for="account">帳號 :</label>
-                            <input type="text" name="account" placeholder="請輸入電子信箱">
-                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="acShow"/>
+                            <input type="email" name="account" placeholder="請輸入電子信箱" v-model.trim="form.account">
+                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="form.acShow"/>
                         </div>
                         <div class="password">
                             <label for="password">密碼 :</label>
-                            <input type="text" name="password" placeholder="必須包含至少6個字符、1個大寫字母和1個數字" id="pwd">
-                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="pwShow"/>
+                            <input type="text" name="password" placeholder="必須包含至少6個字符、1個大寫字母和1個數字" v-model.trim="form.password">
+                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="form.pwShow"/>
                         </div>
                         <div class="verify">
-                            <label for="account">驗證碼 :</label>
+                            <label for="verify">驗證碼 :</label>
                             <div class="display-verify">
-                                <input type="text" name="verify" placeholder="請輸入驗證碼，不分大、小寫">
+                                <input type="text" name="verify" placeholder="請輸入驗證碼，不分大、小寫" >
                                 <p id="code"></p>
                                 <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" class="recode" id="recode"/>
+                                <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="form.vfShow"/>
                             </div>
                            
                         </div>
@@ -105,23 +106,13 @@
                         <button @click="isHidden">前往登入</button>
                     </div>
                 </div>
-                <div class="loose-leaf">
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                    <div class="circle"></div>
-                </div>
             </div>   
         </div>
 
 </template>
 
 <script>
-    import { onMounted, ref } from 'vue'
+    import {  onMounted, reactive, ref, watch } from 'vue'
     import verifycode from '../assets/js/verifycode'
 
     export default {
@@ -130,7 +121,6 @@
             /* 切換登入/創建帳戶 */
             let showLogin = ref(true);
             let showCreate = ref(false);
-
             function isHidden() {
                 showLogin.value = !showLogin.value;
                 showCreate.value = !showCreate.value;
@@ -138,7 +128,6 @@
 
             /* 顯示/不顯示密碼 */
             let openEye = ref(true);
-
             function showEye() {
                 openEye.value = !openEye.value;
                 if(openEye.value) {
@@ -148,9 +137,27 @@
                 }
             }
 
-            let usShow = ref(true);
-            let acShow = ref(false);
-            let pwShow = ref(false);
+            /* 表單輸入 */
+            const form = reactive({
+                user: '',
+                account: '',
+                password: '',
+                verify: '',
+                usShow: false,
+                acShow: false,
+                pwShow: false,
+                vfShow: false,
+            })
+            function checkForm() {
+                let emailRule = /^([\w]+)(.[\w]+)*@([\w]+)(.[\w]{2,3}){1,2}$/;
+                let passwordRule = /^(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]{6,}$/;
+                form.user !== '' ? form.usShow = true : form.usShow = false;
+                emailRule.test(form.account) ? form.acShow = true : form.acShow = false;
+                passwordRule.test(form.password) ? form.pwShow = true : form.pwShow = false;
+            }
+            watch(form, () => {
+                checkForm()
+            })
 
             onMounted(() => {
                 verifycode()
@@ -162,11 +169,10 @@
                 isHidden,
                 openEye,
                 showEye,
-                usShow,
-                acShow,
-                pwShow
+                form,
             }
         }
+    
     }
 </script>
 
@@ -401,7 +407,7 @@
                     height: 10rem;
                     border: 1px solid $lightText;
                     border-radius: 50%;
-                    margin-top: 5rem;
+                    margin-top: 3rem;
                     .icon {
                         position: absolute;
                         top: 50%;
@@ -460,7 +466,7 @@
                         }
                     }
                     .btn {
-                        padding: 1rem;
+                        padding: 1rem 1rem 2rem 1rem;
                         margin-top: 1rem;
                         button {
                             padding: 1rem;
@@ -594,7 +600,6 @@
                         }
                         .verify {
                             padding: 0 1.5rem;
-                            width: 100%;
                             input::placeholder {
                                 font-size: 1.2rem;
                             }
