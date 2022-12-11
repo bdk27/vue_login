@@ -6,9 +6,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
-import { faUser, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faEye, faEyeSlash, faArrowRotateLeft } from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 /* add icons to the library */
-library.add(faUser, faEye, faEyeSlash)
+library.add(faUser, faEye, faEyeSlash, faCircleCheck, faArrowRotateLeft)
 
 createApp(App)
 .component('font-awesome-icon', FontAwesomeIcon)

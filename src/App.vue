@@ -6,27 +6,13 @@
 
 <script>
 import Login from './components/Login'
-import isHide from './assets/js/script'
-
-import { onMounted } from 'vue'
-
 
 export default {
   name: 'App',
   components: {
     Login,
   },
-  setup() {
 
-    onMounted(() => {
-      isHide
-    })
-            
-    
-    return {
-      
-    }
-  }
 }
 </script>
 

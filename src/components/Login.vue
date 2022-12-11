@@ -50,13 +50,46 @@
                         <small>點擊上方按鈕即表示您同意我們的<a href="#">使用條款</a>和<a href="#">隱私政策</a></small>
                     </div>
                 </div>
-                
             </div> 
         </div>
 
         <div class="create" v-show="showCreate">
             <div class="create-left">
-                <h1>789</h1>
+                <div class="create-left-content">
+                    <div class="photo">
+                        <font-awesome-icon icon="fa-solid fa-user" class="icon" />
+                    </div>
+                    <h1>創建帳戶</h1>
+                    <form action="#">
+                        <div class="user">
+                            <label for="user">名稱 :</label>
+                            <input type="text" name="user" placeholder="請輸入名稱">
+                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="usShow"/>
+                        </div>
+                        <div class="account">
+                            <label for="account">帳號 :</label>
+                            <input type="text" name="account" placeholder="請輸入電子信箱">
+                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="acShow"/>
+                        </div>
+                        <div class="password">
+                            <label for="password">密碼 :</label>
+                            <input type="text" name="password" placeholder="必須包含至少6個字符、1個大寫字母和1個數字" id="pwd">
+                            <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="pwShow"/>
+                        </div>
+                        <div class="verify">
+                            <label for="account">驗證碼 :</label>
+                            <div class="display-verify">
+                                <input type="text" name="verify" placeholder="請輸入驗證碼，不分大、小寫">
+                                <p id="code"></p>
+                                <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" class="recode" id="recode"/>
+                            </div>
+                           
+                        </div>
+                        <div class="btn">
+                            <button type="button">註冊</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="create-right">
                 <div class="create-right-content">
@@ -88,7 +121,9 @@
 </template>
 
 <script>
-    import { ref } from 'vue'
+    import { onMounted, ref } from 'vue'
+    import verifycode from '../assets/js/verifycode'
+
     export default {
         name: 'LogIn',
         setup() {
@@ -113,7 +148,13 @@
                 }
             }
 
+            let usShow = ref(true);
+            let acShow = ref(false);
+            let pwShow = ref(false);
 
+            onMounted(() => {
+                verifycode()
+            })
 
             return {
                 showLogin,
@@ -121,8 +162,10 @@
                 isHidden,
                 openEye,
                 showEye,
+                usShow,
+                acShow,
+                pwShow
             }
-            
         }
     }
 </script>
@@ -169,7 +212,7 @@
             border: 1px solid $lightText;
         }
         input::placeholder {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
         }
     }
     
@@ -217,6 +260,8 @@
                         background-color: transparent;
                         color: $darkText;
                         font-size: 1.6rem;
+                        padding: 1rem;
+                        cursor: pointer;
                     }
                     button:hover {
                         background-color: $darkText;
@@ -225,7 +270,6 @@
                     }
                 }
             }
-            
         }
         .login-right {
             width: 50%;
@@ -282,6 +326,7 @@
                             width: 100%;
                             border-radius: .5rem;
                             font-size: 1.8rem;
+                            cursor: pointer;
                         }
                         button:hover {
                             background-color: $lightText;
@@ -348,6 +393,88 @@
             height: 100%;
             background-color: #fff;
             border-radius: 2rem;
+            .create-left-content {
+                @extend %login-content;
+                .photo {
+                    position: relative;
+                    width: 10rem;
+                    height: 10rem;
+                    border: 1px solid $lightText;
+                    border-radius: 50%;
+                    margin-top: 5rem;
+                    .icon {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        font-size: 5rem;
+                        color: $lightText;
+                    }
+                }
+                h1 {
+                    color: $darkText;
+                    font-size: 3rem;
+                    padding: 1rem;
+                }
+                form {
+                    width: 90%;
+                    .user {
+                        padding: .5rem;
+                        @extend %input;
+                        position: relative;
+                        width: 90%;
+                    }
+                    .account {
+                        padding: .5rem;
+                        @extend %input;
+                        position: relative;
+                        width: 90%;
+                    }
+                    .password {
+                        padding: .5rem;
+                        position: relative;
+                        @extend %input;
+                        width: 90%;
+                    }
+                    .verify {
+                        padding: .5rem;
+                        @extend %input;
+                        width: 90%;
+                        .display-verify {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            p {
+                                padding: 1rem;
+                                font-size: 1.8rem;
+                                border-radius: .5rem;
+                                text-align: center;
+                                font-weight: bold;
+                                margin: 0 1rem;
+                            }
+                            .recode {
+                                color: $darkText;
+                                font-size: 2rem;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    .btn {
+                        padding: 1rem;
+                        margin-top: 1rem;
+                        button {
+                            padding: 1rem;
+                            width: 100%;
+                            border-radius: .5rem;
+                            font-size: 1.8rem;
+                            cursor: pointer;
+                        }
+                        button:hover {
+                            background-color: $lightText;
+                        }
+                    } 
+                }
+            }
         }
         .create-right {
             width: 50%;
@@ -391,6 +518,8 @@
                         background-color: transparent;
                         color: $darkText;
                         font-size: 1.6rem;
+                        padding: 1rem;
+                        cursor: pointer;
                     }
                     button:hover {
                         background-color: $darkText;
@@ -402,14 +531,12 @@
         }
     }
 
-    .btn {
+    .circle-check {
+        font-size: 2.5rem;
+        color: green;
+        position: absolute;
         top: 50%;
-        left: 50px;
-    }
-
-    button {
-        padding: 10px;
-        cursor: pointer;
+        right: -10%;
     }
 
     @media(max-width: 991px) {
@@ -448,6 +575,65 @@
                 }
             }
         }
+        .create{
+            .create-left {
+                .create-left-content {
+                    form {
+                        width: 100%;
+                        .user {
+                            padding: 0 1.5rem;
+                        }
+                        .account {
+                            padding: 0 1.5rem;
+                        }
+                        .password {
+                            padding: 0 1.5rem;
+                            input::placeholder {
+                                font-size: 1.2rem;
+                            }
+                        }
+                        .verify {
+                            padding: 0 1.5rem;
+                            width: 100%;
+                            input::placeholder {
+                                font-size: 1.2rem;
+                            }
+                            .display-verify {
+                                p {
+                                    font-size: 1.2rem;
+                                }
+                            }
+                        }
+                        .btn {
+                            padding: 0 1.5rem;
+                        } 
+                    }
+                }
+            }
+            .create-right {
+                .create-right-content {
+                    padding: 2rem;
+                    .text {
+                        p {
+                            font-size: 1.4rem;
+                        }
+                    }
+                    .image {
+                        margin: 0;
+                    }
+                    .btn {
+                        text-align: center;
+                        button {
+                            margin-top: 2rem;
+                        }
+                    }
+                }
+            }
+        }
+        .circle-check {
+            font-size: 2rem;
+            right: -5%;
+        }
     }
     @media(max-width: 768px) {
         .login {
@@ -481,6 +667,65 @@
                             span::before, span::after {
                                 width: 30%;
                             }        
+                        }
+                    }
+                }
+            }
+        }
+        .create{
+            flex-direction: column;
+            .create-left {
+                width: 100%;
+                .create-left-content {
+                    form {
+                        .user {
+                            padding: 0 2rem;
+                        }
+                        .account {
+                            padding: 0 2rem;
+                        }
+                        .password {
+                            padding: 0 2rem;
+                            input::placeholder {
+                                font-size: 1.4rem;
+                            }
+                        }
+                        .verify {
+                            padding: 0 2rem;
+                            width: 100%;
+                            input::placeholder {
+                                font-size: 1.4rem;
+                            }
+                            .display-verify {
+                                p {
+                                    font-size: 1.8rem;
+                                }
+                            }
+                        }
+                        .btn {
+                            padding: 0 1.5rem;
+                            margin-bottom: 1rem;
+                        } 
+                    }
+                }
+            }
+            .create-right {
+                width: 100%;
+                padding: 0; 
+                .create-right-content {
+                    padding: 0;
+                    border-radius: 0 0 2rem 2rem;
+                    .text {
+                       display: none;
+                    }
+                    .image {
+                        display: none;
+                    }
+                    .btn {
+                         bottom: 1rem;
+                        button {
+                            margin: 1rem 0;
+                            font-size: 1.4rem;
                         }
                     }
                 }
