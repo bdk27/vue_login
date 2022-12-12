@@ -79,12 +79,11 @@
                         <div class="verify">
                             <label for="verify">驗證碼 :</label>
                             <div class="display-verify">
-                                <input type="text" name="verify" placeholder="請輸入驗證碼，不分大、小寫" >
+                                <input type="text" name="verify" placeholder="請輸入驗證碼，不分大、小寫" v-model="form.checkCode">
                                 <p id="code"></p>
                                 <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" class="recode" id="recode"/>
                                 <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="form.vfShow"/>
                             </div>
-                           
                         </div>
                         <div class="btn">
                             <button type="button">註冊</button>
@@ -113,7 +112,6 @@
 
 <script>
     import {  onMounted, reactive, ref, watch } from 'vue'
-    import verifycode from '../assets/js/verifycode'
 
     export default {
         name: 'LogIn',
@@ -136,13 +134,54 @@
                     document.getElementById('pwd').setAttribute('type', 'password');
                 }
             }
+            
+            /* 驗證碼 */
+            let code = ref('');
+            function verifycode() {
+                //全域變數 紀錄驗證碼
+                let checkCode = document.getElementById("code");
+
+                //顏色組
+                const fontColor = ['red', 'orange', 'yellow', 'green'];
+                const bgColor = [ 'blue', 'indigo', 'purple', 'gold'];
+                const ls = ['2px', '6px', '-2px', '4px'];
+                let iColor = 0;
+
+                //隨機設定顏色組合
+                function randColor() {
+                    iColor = Math.floor(Math.random() * (fontColor.length));
+                    return iColor;
+                }
+                function createCode() {
+                    let ci = randColor()
+                    checkCode.style.color = fontColor[ci];
+                    checkCode.style.backgroundColor = bgColor[ci];
+                    checkCode.style.letterSpacing = ls[ci];
+
+                    code.value = '';
+                    let codeLength = 6;//驗證碼的長度	
+                    const random = new Array(0,1,2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');//隨機數 
+                    for(let i=0; i<codeLength; i++) {
+                        let index = Math.floor(Math.random() * 36);//取得隨機數的索引（0~35） 
+                        code.value  += random[index];//根據索引取得隨機數加到code上 
+                    } 
+                    checkCode.innerText = code.value;//把code值賦給驗證碼
+                }
+                //更新驗證碼
+                let recode = document.getElementById('recode');
+                recode.addEventListener("click",function(){
+                    createCode();
+                });
+                
+                createCode();
+            }
 
             /* 表單輸入 */
             const form = reactive({
                 user: '',
                 account: '',
                 password: '',
-                verify: '',
+                checkCode: '',
                 usShow: false,
                 acShow: false,
                 pwShow: false,
@@ -154,9 +193,11 @@
                 form.user !== '' ? form.usShow = true : form.usShow = false;
                 emailRule.test(form.account) ? form.acShow = true : form.acShow = false;
                 passwordRule.test(form.password) ? form.pwShow = true : form.pwShow = false;
+                form.checkCode === code.value ? form.vfShow = true : form.vfShow = false;
             }
-            watch(form, () => {
+            watch(form, (value) => {
                 checkForm()
+                console.log(value)
             })
 
             onMounted(() => {
@@ -170,6 +211,8 @@
                 openEye,
                 showEye,
                 form,
+                verifycode,
+                code,
             }
         }
     
@@ -446,6 +489,7 @@
                         padding: .5rem;
                         @extend %input;
                         width: 90%;
+                        position: relative;
                         .display-verify {
                             display: flex;
                             align-items: center;
