@@ -25,17 +25,17 @@
                     <form action="#">
                         <div class="account">
                             <label for="account">帳號 :</label>
-                            <input type="text" name="account" placeholder="請輸入信箱">
+                            <input type="email" name="account" placeholder="請輸入信箱" v-model="form.loginAcc">
                         </div>
                         <div class="password">
                             <label for="password">密碼 :</label>
-                            <input type="text" name="password" placeholder="請輸入密碼" id="pwd">
+                            <input type="text" name="password" placeholder="請輸入密碼" id="pwd" v-model="form.loginPwd">
                             <font-awesome-icon icon="fa-solid fa-eye" class="eye" v-if="openEye" @click="showEye"/>
                             <font-awesome-icon icon="fa-solid fa-eye-slash" class="eye" v-else @click="showEye"/>
                             
                         </div>
                         <div class="btn">
-                            <button type="button">登入</button>
+                            <button type="button" @click="getLoginInfo">登入</button>
                         </div>
                     </form>
                     <div class="platform">
@@ -79,14 +79,14 @@
                         <div class="verify">
                             <label for="verify">驗證碼 :</label>
                             <div class="display-verify">
-                                <input type="text" name="verify" placeholder="請輸入驗證碼，不分大、小寫" v-model="form.checkCode">
+                                <input type="text" name="verify" placeholder="請輸入驗證碼" v-model="form.checkCode">
                                 <p id="code"></p>
                                 <font-awesome-icon icon="fa-solid fa-arrow-rotate-left" class="recode" id="recode"/>
                                 <font-awesome-icon icon="fa-regular fa-circle-check" class="circle-check" v-show="form.vfShow"/>
                             </div>
                         </div>
                         <div class="btn">
-                            <button type="button">註冊</button>
+                            <button type="button" @click="saveLoginInfo">註冊</button>
                         </div>
                     </form>
                 </div>
@@ -116,7 +116,7 @@
     export default {
         name: 'LogIn',
         setup() {
-            /* 切換登入/創建帳戶 */
+            //切換登入/創建帳戶
             let showLogin = ref(true);
             let showCreate = ref(false);
             function isHidden() {
@@ -124,7 +124,7 @@
                 showCreate.value = !showCreate.value;
             }
 
-            /* 顯示/不顯示密碼 */
+            //顯示/不顯示密碼
             let openEye = ref(true);
             function showEye() {
                 openEye.value = !openEye.value;
@@ -135,7 +135,7 @@
                 }
             }
             
-            /* 驗證碼 */
+            //驗證碼
             let code = ref('');
             function verifycode() {
                 //全域變數 紀錄驗證碼
@@ -152,6 +152,7 @@
                     iColor = Math.floor(Math.random() * (fontColor.length));
                     return iColor;
                 }
+                //組成驗證碼
                 function createCode() {
                     let ci = randColor()
                     checkCode.style.color = fontColor[ci];
@@ -176,8 +177,10 @@
                 createCode();
             }
 
-            /* 表單輸入 */
+            //表單
             const form = reactive({
+                loginAcc: '',
+                loginPwd: '',
                 user: '',
                 account: '',
                 password: '',
@@ -195,24 +198,67 @@
                 passwordRule.test(form.password) ? form.pwShow = true : form.pwShow = false;
                 form.checkCode === code.value ? form.vfShow = true : form.vfShow = false;
             }
-            watch(form, (value) => {
-                checkForm()
-                console.log(value)
+            watch(form, () => {
+                checkForm();
             })
+
+            //本地存儲
+            const loginData = reactive([]);
+            function saveLoginInfo() {
+                const personId = {user: form.user, account: form.account, password: form.password};
+                
+                if(form.usShow === true && form.acShow === true && form.pwShow === true && form.vfShow === true) {
+                    loginData.push(personId);
+                    form.user = '';
+                    form.account = '';
+                    form.password = '';
+                    form.checkCode = '';
+                    alert("註冊成功 \\(^-^)/");
+                    verifycode()
+                }else {
+                    alert('請查看輸入是否全部正確!!!');
+                }
+            }
+            watch(loginData, (value) => {
+                localStorage.setItem('userInfo', JSON.stringify(value))
+            })
+            
+            function getLoginInfo() {
+                let getUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+                let index = getUserInfo.filter((value) => {
+                    return value.account === form.loginAcc
+                });
+                if(index[0].password === form.loginPwd) {
+                    alert(`登入成功! ${index[0].user}歡迎回來`);
+                    form.loginAcc = '';
+                    form.loginPwd = '';
+                }else {
+                    alert('登入失敗! 請重新輸入');
+                }
+            }
 
             onMounted(() => {
                 verifycode()
             })
 
             return {
+                //切換登入/創建帳戶
                 showLogin,
                 showCreate,
                 isHidden,
+                //顯示/不顯示密碼
                 openEye,
                 showEye,
+                //驗證碼
+                code,
+                //表單
                 form,
                 verifycode,
-                code,
+                //本地存儲
+                saveLoginInfo,
+                loginData,
+                getLoginInfo,
+                
             }
         }
     
@@ -644,9 +690,6 @@
                         }
                         .verify {
                             padding: 0 1.5rem;
-                            input::placeholder {
-                                font-size: 1.2rem;
-                            }
                             .display-verify {
                                 p {
                                     font-size: 1.2rem;
