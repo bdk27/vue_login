@@ -107,11 +107,10 @@
                 </div>
             </div>   
         </div>
-
 </template>
 
 <script>
-    import {  onMounted, reactive, ref, watch } from 'vue'
+    import { onMounted, reactive, ref, watch } from 'vue'
 
     export default {
         name: 'LogIn',
@@ -263,7 +262,6 @@
                 
             }
         }
-    
     }
 </script>
 
