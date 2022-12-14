@@ -140,13 +140,11 @@
             function verifycode() {
                 //全域變數 紀錄驗證碼
                 let checkCode = document.getElementById("code");
-
                 //顏色組
                 const fontColor = ['red', 'orange', 'yellow', 'green'];
                 const bgColor = [ 'blue', 'indigo', 'purple', 'gold'];
                 const ls = ['2px', '6px', '-2px', '4px'];
                 let iColor = 0;
-
                 //隨機設定顏色組合
                 function randColor() {
                     iColor = Math.floor(Math.random() * (fontColor.length));
@@ -206,7 +204,6 @@
             const loginData = reactive([]);
             function saveLoginInfo() {
                 const personId = {user: form.user, account: form.account, password: form.password};
-                
                 if(form.usShow === true && form.acShow === true && form.pwShow === true && form.vfShow === true) {
                     loginData.push(personId);
                     form.user = '';
@@ -223,17 +220,22 @@
                 localStorage.setItem('userInfo', JSON.stringify(value))
             })
             
+            // 登入
             function getLoginInfo() {
                 let getUserInfo = JSON.parse(localStorage.getItem('userInfo'));
                 let index = getUserInfo.filter((value) => {
                     return value.account === form.loginAcc
                 });
-                if(index[0].password === form.loginPwd) {
-                    alert(`登入成功! ${index[0].user}歡迎回來`);
-                    form.loginAcc = '';
-                    form.loginPwd = '';
+                if(index[0] === undefined) {
+                    alert('帳號錯誤! 請重新輸入');
                 }else {
-                    alert('登入失敗! 請重新輸入');
+                    if(index[0].password === form.loginPwd) {
+                        alert(`登入成功! ${index[0].user}歡迎回來`);
+                        form.loginAcc = '';
+                        form.loginPwd = '';
+                    }else {
+                        alert('密碼錯誤! 請重新輸入');
+                    }
                 }
             }
 
@@ -323,6 +325,7 @@
                 background-color: $mainColor;
                 border-radius: 2rem;
                 padding: 1.5rem;
+                backdrop-filter: brightness(10px);
                 .text {
                     text-align: center;
                     margin-top: 5rem;

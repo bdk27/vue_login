@@ -34,8 +34,7 @@ export default {
   .hero {
     width: 100%;
     min-height: 100vh;
-    background:#efdcd6;
-    display: flex;
+    background-image: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
     align-items: center;
     justify-content: center;
   }
