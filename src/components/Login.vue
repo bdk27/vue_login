@@ -200,7 +200,7 @@
             })
 
             //本地存儲
-            const loginData = reactive([]);
+            const loginData = reactive(JSON.parse(localStorage.getItem('userInfo')) || []);
             function saveLoginInfo() {
                 const personId = {user: form.user, account: form.account, password: form.password};
                 if(form.usShow === true && form.acShow === true && form.pwShow === true && form.vfShow === true) {
