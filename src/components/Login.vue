@@ -638,98 +638,8 @@
 
     @media(max-width: 991px) {
         .login {
-            .login-left {
-                .login-left-content {
-                    padding: 2rem;
-                    .text {
-                        p {
-                            font-size: 1.4rem;
-                        }
-                    }
-                    .image {
-                        margin: 0;
-                    }
-                    .btn {
-                        text-align: center;
-                        button {
-                            margin-top: 2rem;
-                        }
-                    }
-                }
-            }
-            .login-right {
-                .login-right-content {
-                    form {
-                        width: 100%;
-                    }
-                    .platform {
-                        p {
-                            span::before, span::after {
-                                width: 30%;
-                            }        
-                        }
-                    }
-                }
-            }
-        }
-        .create{
-            .create-left {
-                .create-left-content {
-                    form {
-                        width: 100%;
-                        .user {
-                            padding: 0 1.5rem;
-                        }
-                        .account {
-                            padding: 0 1.5rem;
-                        }
-                        .password {
-                            padding: 0 1.5rem;
-                            input::placeholder {
-                                font-size: 1.2rem;
-                            }
-                        }
-                        .verify {
-                            padding: 0 1.5rem;
-                            .display-verify {
-                                p {
-                                    font-size: 1.2rem;
-                                }
-                            }
-                        }
-                        .btn {
-                            padding: 0 1.5rem;
-                        } 
-                    }
-                }
-            }
-            .create-right {
-                .create-right-content {
-                    padding: 2rem;
-                    .text {
-                        p {
-                            font-size: 1.4rem;
-                        }
-                    }
-                    .image {
-                        margin: 0;
-                    }
-                    .btn {
-                        text-align: center;
-                        button {
-                            margin-top: 2rem;
-                        }
-                    }
-                }
-            }
-        }
-        .circle-check {
-            font-size: 2rem;
-            right: -5%;
-        }
-    }
-    @media(max-width: 768px) {
-        .login {
+            left: 10%;
+            right: 10%;
             flex-direction: column-reverse;
             .login-left {
                 width: 100%;
@@ -766,6 +676,8 @@
             }
         }
         .create{
+            left: 10%;
+            right: 10%;
             flex-direction: column;
             .create-left {
                 width: 100%;
@@ -825,8 +737,142 @@
             }
         }
     }
+    @media(max-width: 768px) {
+    }
     @media(max-width: 450px) {
-        
+        .login {
+            .login-left {
+                .login-left-content { 
+                    .btn {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                        bottom: 1rem;
+                        button {
+                            margin: 1rem 0;
+                            font-size: 1.4rem;
+                        }
+                    }
+                }
+            }
+            .login-right {
+                .login-right-content {
+                    .photo {
+                        width: 0;
+                        height: 0;
+                        border: 0;
+                        padding: 1rem;
+                        margin-top: 2rem;
+                        .icon {
+                            font-size: 3rem;
+                        }
+                    }
+                    h1 {
+                        font-size: 2.5rem;
+                    }
+                    form {
+                        .account {
+                            padding: 0;
+                            input {
+                                padding: 1rem;
+                            }
+                        }
+                        .password {
+                            padding: 0;
+                            input {
+                                padding: 1rem;
+                            }
+                            .eye {
+                                top: 50%;
+                            }
+                        }
+                        .btn {
+                            padding: 0;
+                            button {
+                                padding: 0.5rem;
+                            }
+                        }
+                    }
+                    .platform {
+                        p {
+                            width: 100%;
+                            span::before, span::after {
+                                width: 20%;
+                            }        
+                        }
+                        .brands {
+                            img {
+                                width: 4.5rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .create{
+            .create-left {
+                width: 100%;
+                .create-left-content {
+                    .photo {
+                        width: 0;
+                        height: 0;
+                        border: 0;
+                        padding: 1rem;
+                        margin-top: 3rem;
+                        .icon {
+                            font-size: 3rem;
+                        }
+                    }
+                    h1 {
+                        font-size: 2.5rem;
+                    }
+                    form {
+                        width: 100%;
+                        .user {
+                            input {
+                                padding: 1rem;
+                            }
+                        }
+                        .account {
+                            input {
+                                padding: 1rem;
+                            }
+                        }
+                        .password {
+                            input {
+                                padding: 1rem;
+                            }
+                        }
+                        .verify {
+                            input {
+                                padding: 1rem;
+                            }
+                        }
+                        .btn {
+                            button {
+                                padding: .5rem;
+                            }
+                        } 
+                    }
+                }
+            }
+            .create-right {
+                .btn {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    button {
+                        margin: 1rem 0;
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+        }
+    }
+    .circle-check {
+        right: -5%;
     }
 
 </style>
